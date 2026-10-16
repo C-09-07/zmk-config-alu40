@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+
+config ALU40_BLE_RECOVERY
+    bool "Drop BLE links that never become encrypted so the host reconnects"
+    default y
+    depends on ZMK_BLE
+    help
+      ZMK only logs encryption failures and keeps the link up, which leaves
+      the host showing the keyboard as connected while HID reports are
+      rejected. This requests encryption as soon as a bonded host connects,
+      and disconnects any link whose encryption fails or never completes so
+      ZMK goes back to advertising and the host can reconnect or re-pair.
+
+if ALU40_BLE_RECOVERY
+
+config ALU40_BLE_RECOVERY_TIMEOUT_MS
+    int "Time a bonded host has to encrypt the link before it is dropped"
+    default 30000
+
+config ALU40_BLE_RECOVERY_MAX_RETRIES
+    int "Consecutive forced disconnects before giving up until a link succeeds"
+    default 5
+
+endif

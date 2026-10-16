@@ -3,13 +3,12 @@ manifest:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
   projects:
-    - name: alu40-module
-      url: https://github.com/polarityworks/zmk-config-alu40
-      revision: main
-      clone-depth: 1
+    # Pinned: ZMK main moved to Zephyr 4.1, which no longer accepts this
+    # board's hardware model v1 definition in boards/arm/alu40.
+    # This repo is loaded as a module itself via zephyr/module.yml.
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: v0.3
       import: app/west.yml
   self:
     path: config
